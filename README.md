@@ -1,25 +1,61 @@
 # LAN Party Launcher
 
-Needs only Python 3.10 or newer (standard library, no pip installs; the zstd and lz4 modules for faster game
-copies are bundled in `lanparty\vendor`).
+One window for a LAN party: every player's games in one shared library, fast copying of games between PCs,
+one-click host and join, a ranked-choice vote for what to play next, and an internet "LAN" over a VPN so old
+games that only search the local network can still find each other.
 
-## Run
-Double-click `run.bat`. It opens http://127.0.0.1:47801 in your browser.
-Then: **Settings → Browse for folder…** and pick the folder that holds your games (one sub-folder per game).
+Runs on Windows. Every PC at the party runs a copy; they find each other by themselves, with no server to set up.
 
-Every PC at the party runs it. Copies on the same network find each other by themselves (UDP 47800, TCP 47801).
-The first time, Windows asks to allow Python through the firewall; allow it on **private** networks, or use
-**Network → Open firewall** to add every rule at once.
+![Library: every game in the party, with Launch, Host and "Get from" buttons](docs/images/library.png)
 
+## Features
+- **Shared library.** Each player points the launcher at their games folder (one sub-folder per game). Every PC
+  sees every game anyone has; games you lack show "Get from *player*".
+- **Fast game copies.** A game copies from every player who has it at once, players who are still downloading
+  share the parts they have, transfers are compressed (zstd/LZ4, level adjusted to the link), and every file is
+  checked by SHA-256. While you are playing, copies slow down so your game doesn't lag.
+- **Host and join in one click.** "Host for everyone" starts the game and shows everyone else a Join banner with
+  the right address filled in. Per-game settings live in a small JSON file (see [docs/lan_json.md](docs/lan_json.md)).
+- **Vote on what to play.** Ranked-choice (instant-runoff) polls with a live count on every PC, plus heart
+  scores so the Party Master can see what people actually want to play.
+- **Media sharing.** Movies, TV, Music, Books and Misc tabs share folders the same way as games.
+- **Old games work.** IPXWrapper for Windows IPX games, DOSBox-X with IPX for DOS games, prerequisite installers
+  (DirectX 9, Visual C++, .NET, DirectPlay, XNA, OpenAL, PhysX) and firewall rules in one click.
+- **Internet party.** An encrypted n2n VPN with a short party code; LAN broadcasts cross it, so games that only
+  look on the local network still see each other. Notes on tested games are in [docs/games.md](docs/games.md).
+- **Self-updating.** When another player has a newer launcher, you can update from them with one click.
 
-## Source vs. release download
-This repository is the source code only (under 1 MB). The bundled programs it uses, DOSBox-X and n2n in
-`lanparty\bin\` and the zstd/lz4 modules in `lanparty\vendor\` (about 60 MB), come in the release download.
-To run from source, copy those two folders from a release zip into `lanparty\`. Without `vendor` the launcher still
-works and copies games uncompressed; without `bin` the internet-party VPN and the bundled DOSBox-X need to be supplied another way.
+## Screenshots
+| | |
+|---|---|
+| ![Ranked-choice vote with the Party Master's heart scores](docs/images/vote.png) | ![Movies tab sharing a media folder](docs/images/media.png) |
+| **Vote**: ranked-choice polls and heart scores | **Movies**: media folders shared like games |
+| ![Settings: name, games folders, media folders](docs/images/settings.png) | |
+| **Settings**: your name, games and media folders | |
+
+## Requirements
+- Windows 10 or 11.
+- Python 3.10 or newer (standard library only, no pip installs).
+- For internet parties: the host forwards UDP port 7654 on their router (or a friend runs the supernode).
+
+## Install
+**Players:** download the release zip from the [Releases](../../releases) page, unzip it anywhere, and
+double-click `run.bat`. The release includes the bundled programs listed below.
+
+**From source:** clone this repository. It holds the source code only (under 1 MB). The bundled programs,
+DOSBox-X and n2n in `lanparty\bin\` and the zstd/lz4 modules in `lanparty\vendor\` (about 60 MB), come in the
+release zip; copy those two folders from it into `lanparty\`. Without `vendor` the launcher still works and copies
+games uncompressed; without `bin` the internet-party VPN and the bundled DOSBox-X need to be supplied another way.
+
+## Quick start
+1. Double-click `run.bat`. It opens http://127.0.0.1:47801 in your browser.
+2. **Settings → Browse for folder…** and pick the folder that holds your games (one sub-folder per game).
+3. The first time, Windows asks to allow Python through the firewall; allow it on **private** networks, or use
+   **Network → Open firewall** to add every rule at once.
+4. Do the same on every PC. Copies on the same network find each other by themselves (UDP 47800, TCP 47801).
 
 ## Tabs
-- **Library**: every game anyone has. Games you lack are greyed with "Get from <player>", which copies
+- **Library**: every game anyone has. Games you lack are greyed with "Get from *player*", which copies
   the game from every player who has it at once. "Host for everyone" starts the game and shows everyone a Join banner.
   While a game copies, its card shows live stats: speed, time left, each player it comes from, who copies it from
   you. Players who are still downloading a game share the parts they have (swarm), every file is checked by
@@ -38,7 +74,7 @@ works and copies games uncompressed; without `bin` the internet-party VPN and th
 
 ## Updating the launcher
 The version is in the top bar (e.g. `v1.1.0`) and in the Players table. When another player's launcher is newer,
-a yellow bar says "Launcher v… is available from <player>" with an **Update** button. Nothing changes until you click it.
+a yellow bar says "Launcher v… is available from *player*" with an **Update** button. Nothing changes until you click it.
 Then the launcher downloads that player's copy, checks every file against its SHA-256 list, backs up the files it
 replaces into `backup\<date>_update\`, and restarts itself. During an internet party you stay connected: the VPN
 keeps running through the restart and running games aren't interrupted (from v1.3.0; an older launcher still
@@ -66,5 +102,19 @@ Put `lanparty.json` in a game folder:
 `python tests\smoke_test.py` starts two launchers on this PC and checks discovery, library merge, the vote,
 a game download, the path-traversal guard and a launcher update from a newer copy. It should end with `ALL_PASS`.
 
-## Options
+## Command-line options
 `python -m lanparty --port 47801 --name Player --folder D:\Games --peer 192.168.1.20:47801 --no-browser`
+
+## Project layout
+| Path | What it is |
+|---|---|
+| `lanparty/` | The launcher (Python). `server.py` serves the web interface and the peer API. |
+| `lanparty/web/` | The interface (HTML, CSS, JavaScript; no build step). |
+| `data/known_games.json` | Starter list of games: ids, aliases, network type, host/join arguments. |
+| `docs/` | Per-game settings format, tested games and their network notes. |
+| `tests/` | `smoke_test.py` and unit tests; run each with `python tests\<name>.py`. |
+| `tools/` | `lanprobe.py`, a tester for what game-style discovery packets cross the network. |
+
+## License
+GNU General Public License v3.0, see [LICENSE](LICENSE). Bundled third-party programs keep their own licenses,
+listed in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
