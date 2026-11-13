@@ -1,0 +1,21 @@
+{
+  "_comment": "Starter database. id = canonical game id. aliases = other folder names. network: ipx | tcp | directplay. host_args / join_args may use {host_ip}. Edit freely; a lanparty.json inside a game folder overrides all of this.",
+  "games": [
+    {"id": "warcraft2", "title": "Warcraft II", "aliases": ["warcraft2bne", "warcraftiibattlenetedition", "warcraftii", "war2"], "network": "ipx"},
+    {"id": "redalert", "title": "Command & Conquer: Red Alert", "aliases": ["commandconquerredalert", "candcredalert", "ra95"], "network": "ipx"},
+    {"id": "commandconquer", "title": "Command & Conquer", "aliases": ["candc", "cnc95", "tiberiandawn"], "network": "ipx"},
+    {"id": "diablo", "title": "Diablo", "aliases": ["diablo1"], "network": "ipx"},
+    {"id": "duke3d", "title": "Duke Nukem 3D", "aliases": ["dukenukem3d", "duke3datomic"], "network": "ipx", "dos": true},
+    {"id": "dukenukemforevercomplete", "title": "Duke Nukem Forever", "aliases": ["dukenukemforever"], "network": "tcp", "exe": "DukeForever.exe", "host_args": "DM-Industrial?Game=dnGame.dnDeathmatchGame?Listen?MaxPlayers=16?Rotation=Random", "join_args": "{host_ip}:7777"},
+    {"id": "doom2", "title": "Doom II", "aliases": ["doomii"], "network": "ipx", "dos": true},
+    {"id": "descent", "title": "Descent", "aliases": [], "network": "ipx", "dos": true},
+    {"id": "starcraft", "title": "StarCraft", "aliases": ["starcraftbroodwar", "scbw"], "network": "ipx"},
+    {"id": "ageofempires2", "title": "Age of Empires II", "aliases": ["aoe2", "ageofkings", "ageofempiresii"], "network": "directplay"},
+    {"id": "hexen2", "title": "Hexen 2", "aliases": ["hexenii", "hexen2portalofpraevus"], "network": "tcp"},
+    {"id": "quake3", "title": "Quake III Arena", "aliases": ["quake3arena", "quakeiiiarena", "q3a"], "exe": "quake3.exe", "network": "tcp", "join_args": "+connect {host_ip}"},
+    {"id": "halflife", "title": "Half-Life", "aliases": ["hl1"], "exe": "hl.exe", "network": "tcp", "join_args": "-game valve +connect {host_ip}"},
+    {"id": "counterstrike16", "title": "Counter-Strike 1.6", "aliases": ["cs16", "counterstrike"], "exe": "hl.exe", "network": "tcp", "join_args": "-game cstrike +connect {host_ip}"},
+    {"id": "universeatwarearth", "title": "Universe at War: Earth Assault", "aliases": ["universeatwar", "universeatwarearthassault", "uawea"], "exe": "LaunchUAW.exe"},
+    {"id": "unrealtournament", "title": "Unreal Tournament", "aliases": ["ut99", "ut", "unrealtournamentgoty"], "network": "tcp", "join_args": "{host_ip}"}
+  ]
+}
