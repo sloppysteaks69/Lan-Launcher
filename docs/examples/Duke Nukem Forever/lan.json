@@ -1,0 +1,38 @@
+{
+  "game": "Duke Nukem Forever",
+  "engine": "Unreal Engine 2 derivative (package version 156)",
+  "exe": "System\\DukeForever.exe",
+  "working_dir": "System",
+
+  "setup": {
+    "description": "Creates CODEX save folder, writes LAN-ready config, randomizes player name",
+    "script": "System\\lan_setup.bat"
+  },
+
+  "host": {
+    "command": "System\\DukeForever.exe",
+    "args": ["DM-Industrial?Game=dnGame.dnDeathmatchGame?Listen?MaxPlayers=16?Rotation=Random"],
+    "note": "Listen server for up to 16 players. The menus and the readme say 8, but GameInfo takes ?MaxPlayers= up to 32 (checked with the server query on UDP 7778). Other game types: dnGame.dnDeathmatchGame_TeamDM, dnGame.dnKingOfTheHill, dnGame.dnCaptureTheBabe"
+  },
+
+  "join": {
+    "command": "System\\DukeForever.exe",
+    "args": ["{host_ip}:7777"],
+    "note": "Joins directly by IP over TcpNetDriver (no Steam lobby), so it works over the VPN"
+  },
+
+  "ports": {
+    "udp": "7777-7787,10707",
+    "tcp": "7777"
+  },
+
+  "firewall": [
+    "netsh advfirewall firewall add rule name=\"DNF LAN\" dir=in action=allow protocol=UDP localport=7777-7787,10707",
+    "netsh advfirewall firewall add rule name=\"DNF LAN\" dir=in action=allow protocol=TCP localport=7777"
+  ],
+
+  "players": {
+    "min": 2,
+    "max": 16
+  }
+}

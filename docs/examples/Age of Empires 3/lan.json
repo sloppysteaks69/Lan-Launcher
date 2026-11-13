@@ -1,0 +1,9 @@
+{
+  "game": "Age of Empires 3",
+  "exe": "age3.exe",
+  "name": [
+    { "text": "{documents}\\My Games\\Age of Empires 3\\Startup\\user.cfg",
+      "pattern": "^OverrideAddress=.*$", "line": "OverrideAddress=\"{my_ip}\"" }
+  ],
+  "players": { "min": 2, "max": 8 }
+}

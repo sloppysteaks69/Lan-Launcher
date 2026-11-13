@@ -1,0 +1,8 @@
+{
+  "game": "Hexen 2",
+  "exe": "glh2.exe",
+  "host": { "command": "exe", "args": ["-listen", "16", "-ip", "{my_ip}"] },
+  "join": { "command": "exe", "args": ["-listen", "16", "-ip", "{my_ip}", "+connect", "{host_ip}"] },
+  "ports": { "udp": "26900-26916" },
+  "players": { "min": 2, "max": 16 }
+}

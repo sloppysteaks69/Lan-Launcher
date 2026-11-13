@@ -1,0 +1,14 @@
+{
+  "game": "Stargate Resistance",
+  "exe": "Binaries\\Win32\\SGBGame.exe",
+  "host": {
+    "command": "Binaries\\Win32\\SGBGame.exe",
+    "args": ["server", "CTF-WhiteOut.umap?timeLimit=0?game=SGBGame.SGBCTFGameInfo",
+             "-SERVERNAME={player_name}", "-MAPNAME=Whiteout", "-DEDICATED=true",
+             "-CONNECTIONSTRING={host_ip}:7777", "-PORT=7777"],
+    "then_join": true
+  },
+  "join": { "command": "Binaries\\Win32\\SGBGame.exe", "args": ["{host_ip}:7777"] },
+  "ports": { "udp": "7777", "tcp": "8081" },
+  "players": { "min": 2, "max": 16 }
+}
