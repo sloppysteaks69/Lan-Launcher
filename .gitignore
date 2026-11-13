@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+backup/
+releases/
+captures/
+key.txt
+settings.json
+
+# bundled programs: shipped in the release zip, not in the repo (see THIRD_PARTY_NOTICES.md)
+lanparty/bin/
+lanparty/vendor/
+lp_test_vpn/
