@@ -115,6 +115,27 @@ a game download, the path-traversal guard and a launcher update from a newer cop
 | `tests/` | `smoke_test.py` and unit tests; run each with `python tests\<name>.py`. |
 | `tools/` | `lanprobe.py`, a tester for what game-style discovery packets cross the network. |
 
+## Credits
+The launcher stands on these projects. Full details, versions and license texts are in
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) and [docs/licenses/](docs/licenses/).
+
+| Used for | Project | License |
+|---|---|---|
+| Internet-party VPN | [n2n6](https://github.com/lucktu/n2n6) v2.3 r287 by lucktu, based on [mxre/n2n](https://github.com/mxre/n2n) and [ntop's n2n](https://github.com/ntop/n2n) | GPL-3.0 |
+| VPN network adapter | [TAP-Windows6](https://github.com/OpenVPN/tap-windows6) by OpenVPN (downloaded at first use) | GPL-2.0 |
+| Game-copy compression | [python-zstandard](https://github.com/indygreg/python-zstandard) with [Zstandard](https://github.com/facebook/zstd) by Meta | BSD-3-Clause |
+| Compression for older launchers | [python-lz4](https://github.com/python-lz4/python-lz4) with [LZ4](https://github.com/lz4/lz4) by Yann Collet | BSD-3-Clause / BSD-2-Clause |
+| DOS games and DOS IPX | [DOSBox-X](https://github.com/joncampbell123/dosbox-x) | GPL-2.0+ |
+| IPX for Windows games | [IPXWrapper](https://github.com/solemnwarning/ipxwrapper) by Daniel Collins (downloaded at first use) | GPL-2.0 |
+| Using the VPN address in games | [ForceBindIP](https://r1ch.net/projects/forcebindip) by Richard Stanway (downloaded at first use) | Freeware |
+| Choice by combat minigames | [Godot Engine](https://godotengine.org) | MIT |
+| Games for Windows Live games (by hand, not bundled) | [XLiveLessNess](https://gitlab.com/GlitchyScripts/xlivelessness) by Glitchy Scripts | LGPL-2.1 |
+
+The bundled programs are unmodified. Source code for the GPL programs in the release zip: n2n6 at
+[commit ea2f439](https://github.com/lucktu/n2n6/tree/ea2f439) and DOSBox-X at
+[tag dosbox-x-v2026.10.01](https://github.com/joncampbell123/dosbox-x/tree/dosbox-x-v2026.10.01); copies go with
+every GitHub Release that ships the release zip.
+
 ## License
-GNU General Public License v3.0, see [LICENSE](LICENSE). Bundled third-party programs keep their own licenses,
-listed in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+The launcher's own code is GNU General Public License v3.0, see [LICENSE](LICENSE). Bundled and downloaded
+third-party programs keep their own licenses, listed above and in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
